@@ -423,3 +423,99 @@ El proyecto busca aplicar principios de **Clean Code** y buenas prácticas de de
 Proyecto desarrollado como parte de las prácticas de programación, con evolución progresiva de la estructura, arquitectura, pruebas unitarias y calidad del código.
 
 La versión actual incorpora una separación de responsabilidades entre la lógica de negocio, las excepciones, la interfaz de consola y las pruebas unitarias.
+
+## 📱 Aplicación Android
+
+La aplicación fue compilada con Buildozer desde Ubuntu 22.04
+mediante WSL, instalada y ejecutada en un dispositivo Android.
+
+### Descarga de ejecutables
+
+El APK de Android y el ejecutable de Windows se publican en:
+
+https://github.com/Jose-Dv/liquidacion-definitiva/releases
+
+### Instalación en Android
+
+1. Descargar `liquidaciondefinitiva-0.1-arm64-v8a-debug.apk`.
+2. Transferir el archivo al dispositivo Android.
+3. Abrir el APK y, si se solicita, permitir la instalación desde
+   la aplicación utilizada para abrirlo.
+4. Completar la instalación.
+5. Abrir **Liquidacion Definitiva**.
+
+El APK es una compilación de prueba (`debug`) para dispositivos
+con arquitectura ARM64 y Android 7.0 o posterior.
+
+### Entorno de compilación utilizado
+
+| Componente | Configuración |
+|---|---|
+| Sistema de compilación | Ubuntu 22.04 mediante WSL |
+| Buildozer | 1.6.0 |
+| Java | OpenJDK 17 |
+| Python para Android | 3.13.5 |
+| Hostpython | 3.13.5 |
+| Interfaz gráfica | Kivy |
+| Arquitectura | arm64-v8a |
+| API mínima de Android | 24 |
+| API objetivo de Android | 33 |
+
+La configuración se encuentra en `buildozer.spec`.
+
+### Ajustes necesarios durante la compilación
+
+Se modificó el archivo `pythonforandroid/build.py` de la copia
+local de python-for-android utilizada por Buildozer:
+
+1. Se limitó la actualización interna de pip a versiones menores
+   de 26. Este cambio por sí solo no resolvió el error.
+2. Se indicó explícitamente la plataforma Android en el comando
+   que instala los paquetes de `requirements.txt` en el directorio
+   de destino, agregando estas opciones:
+
+```text
+--platform android_24_arm64_v8a --python-version 3.13 --implementation cp --only-binary=:all:
+```
+
+Después de este ajuste, la compilación terminó correctamente.
+
+Los archivos que documentan el entorno son:
+
+- `buildozer.spec`: configuración de la aplicación Android.
+- `doc/android/p4a-build.patch`: cambios aplicados a python-for-android.
+- `doc/android/p4a-commit.txt`: revisión exacta de python-for-android utilizada.
+
+Estos ajustes corresponden a la configuración indicada y deben
+revisarse si se cambia la versión de Python o la arquitectura.
+
+### Generación del APK
+
+La compilación se realiza desde Ubuntu, con el proyecto ubicado
+en el sistema de archivos de Linux, por ejemplo:
+
+```bash
+cd ~/liquidacion-definitiva
+```
+
+Para reproducir el entorno es necesario instalar las herramientas
+de compilación, utilizar la revisión de python-for-android
+registrada en `doc/android/p4a-commit.txt` y aplicar el parche
+`doc/android/p4a-build.patch` desde la raíz de esa copia de
+python-for-android.
+
+Con el entorno preparado, ejecutar:
+
+```bash
+buildozer -v android debug
+```
+
+El archivo generado queda en:
+
+```text
+bin/liquidaciondefinitiva-0.1-arm64-v8a-debug.apk
+```
+
+### Evidencia de ejecución en Android
+
+![Aplicación funcionando en Android](doc/android/captura-android.jpeg)
