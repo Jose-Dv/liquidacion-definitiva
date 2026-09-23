@@ -186,6 +186,40 @@ py -m unittest discover -s tests -p "test_*.py" -v
 
 El proyecto contiene 24 pruebas unitarias.
 
+## 🖥️ Generar el ejecutable para Windows
+
+### Prerrequisito
+
+Instalar PyInstaller:
+
+```powershell
+py -m pip install -U pyinstaller
+```
+
+### Compilación
+
+Desde la carpeta raíz del proyecto, donde se encuentra `main.py`, ejecutar:
+
+```powershell
+pyinstaller -F --paths=src main.py
+```
+
+El ejecutable se genera en:
+
+```text
+dist/main.exe
+```
+
+Para ejecutarlo desde PowerShell:
+
+```powershell
+.\dist\main.exe
+```
+
+También se puede abrir haciendo doble clic sobre `main.exe`.
+
+Las carpetas `build` y `dist` no se almacenan en el repositorio porque contienen archivos generados durante la compilación.
+
 ## 📥 Entradas
 
 El usuario debe ingresar la siguiente información a través de `main.py`:
