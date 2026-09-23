@@ -1,5 +1,14 @@
 # Proyecto de Liquidación Definitiva
 
+## 👥 Integrantes
+
+- José Manuel Diaz
+- Yeisner David Giraldo
+
+## 🔗 Repositorio del equipo
+
+https://github.com/Jose-Dv/liquidacion-definitiva
+
 ## 📖 Descripción
 
 Este proyecto consiste en el desarrollo de una calculadora que permite calcular la **liquidación definitiva de un empleado** de acuerdo con el motivo de finalización del contrato.
@@ -22,7 +31,7 @@ liquidacion-definitiva/
 │
 ├── src/
 │   ├── controller/
-│   │   └── Componentes de control de la aplicación
+│   │   └── __init__.py
 │   │
 │   ├── model/
 │   │   ├── __init__.py
@@ -30,6 +39,9 @@ liquidacion-definitiva/
 │   │   └── logica_liquidacion.py
 │   │
 │   └── view/
+│       ├── gui/
+│       │   └── liquidacion_gui.py
+│       ├── __init__.py
 │       └── main.py
 │
 ├── tests/
@@ -37,6 +49,8 @@ liquidacion-definitiva/
 │   └── test_liquidacion.py
 │
 ├── .gitignore
+├── main.py
+├── requirements.txt
 ├── README.md
 └── Liquidacion definitiva.xlsx
 ```
@@ -51,6 +65,9 @@ liquidacion-definitiva/
 | `src/controller/`                 | Contiene los componentes destinados a coordinar el flujo entre la interfaz y la lógica de negocio.           |
 | `tests/test_liquidacion.py`       | Pruebas unitarias utilizando `unittest` para validar los cálculos, validaciones y manejo de errores.         |
 | `Liquidacion definitiva.xlsx`     | Tablero de casos de prueba utilizado como apoyo para verificar manualmente los resultados de la liquidación. |
+| `src/view/gui/liquidacion_gui.py` | Interfaz gráfica desarrollada con Kivy. Captura los datos, muestra el desglose y presenta mensajes amigables. |
+| `main.py`                         | Punto de entrada ubicado en la raíz para ejecutar la interfaz gráfica. |
+| `requirements.txt`                | Dependencias necesarias para ejecutar la aplicación en otro computador. |
 
 ---
 
@@ -84,7 +101,11 @@ Las excepciones se mantienen separadas de la lógica de negocio para mejorar la 
 
 ### View
 
-`main.py` contiene la interfaz de consola y se encarga de interactuar con el usuario.
+`src/view/main.py` contiene la interfaz de consola.
+
+`src/view/gui/liquidacion_gui.py` contiene la interfaz gráfica desarrollada con Kivy.
+
+Ambas interfaces utilizan las funciones de `src/model/logica_liquidacion.py`, por lo que comparten la misma lógica de negocio y no duplican las fórmulas.
 
 ### Controller
 
@@ -96,33 +117,74 @@ La carpeta `tests` contiene las pruebas unitarias que permiten verificar el comp
 
 ---
 
-# ▶️ Cómo ejecutar
+# ▶️ Instalación y ejecución
 
-## Calcular una liquidación por consola
+## Requisitos
 
-Desde la carpeta raíz del proyecto ejecutar:
+Para ejecutar el proyecto se necesita:
+
+- Python 3 instalado.
+- Git, si se desea clonar el repositorio.
+- Las dependencias incluidas en `requirements.txt`.
+
+## Clonar el repositorio
 
 ```bash
-python src/view/main.py
+git clone https://github.com/Jose-Dv/liquidacion-definitiva.git
+cd liquidacion-definitiva
 ```
 
-La aplicación solicitará los datos necesarios y mostrará el resultado de la liquidación.
+Si el repositorio ya está descargado, este paso no es necesario.
+
+## Instalar las dependencias
+
+En Windows:
+
+```bash
+py -m pip install -r requirements.txt
+```
+
+En Linux o macOS:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+## Ejecutar la interfaz gráfica
+
+Desde la carpeta raíz del proyecto:
+
+```bash
+py main.py
+```
+
+La aplicación abrirá una interfaz gráfica desarrollada con Kivy. Esta permite ingresar los datos del empleado, calcular la liquidación, consultar el desglose de los conceptos y limpiar el formulario.
+
+## Ejecutar la interfaz de consola
+
+Desde la carpeta raíz del proyecto:
+
+```bash
+py src/view/main.py
+```
+
+La consola solicitará el tipo de retiro, salario, fechas y vacaciones disfrutadas.
 
 ## Ejecutar las pruebas unitarias
 
-Desde la carpeta raíz del proyecto ejecutar:
+Desde la carpeta raíz del proyecto:
 
 ```bash
-python -m unittest tests.test_liquidacion -v
+py -m unittest tests.test_liquidacion -v
 ```
 
-También se pueden ejecutar todas las pruebas mediante descubrimiento automático:
+También se pueden ejecutar mediante descubrimiento automático:
 
 ```bash
-python -m unittest discover -s tests -p "test_*.py" -v
+py -m unittest discover -s tests -p "test_*.py" -v
 ```
 
----
+El proyecto contiene 24 pruebas unitarias.
 
 ## 📥 Entradas
 
